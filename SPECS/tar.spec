@@ -5,7 +5,7 @@ Summary: GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.34
-Release: 6%{?dist}
+Release: 6%{?dist}.1
 License: GPLv3+
 URL: https://www.gnu.org/software/tar/
 
@@ -22,6 +22,7 @@ Patch10: tar-1.33-fix-capabilities-test.patch
 Patch11: tar-1.30-padding-zeros.patch
 Patch12: tar-1.30-disk-read-error.patch
 Patch13: tar-1.34-CVE-2022-48303.patch
+Patch14: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
 
 BuildRequires: make
 BuildRequires:  gcc
@@ -116,6 +117,9 @@ make check || (
 
 
 %changelog
+* Fri Aug 16 2024 Lukas Nykryn <lnykryn@redhat.com> - 2:1.34-6.1
+- Warn “file changed as we read it” less often
+
 * Thu Feb 09 2023 Matej Mužila <mmuzila@redhat.com> - 2:1.34-6
 - Fix CVE-2022-48303
 - Resolves: CVE-2022-48303
