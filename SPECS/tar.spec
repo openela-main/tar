@@ -5,7 +5,7 @@ Summary: GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.34
-Release: 6%{?dist}.1
+Release: 7%{?dist}
 License: GPLv3+
 URL: https://www.gnu.org/software/tar/
 
@@ -117,7 +117,7 @@ make check || (
 
 
 %changelog
-* Fri Aug 16 2024 Lukas Nykryn <lnykryn@redhat.com> - 2:1.34-6.1
+* Thu Aug 15 2024 Lukas Nykryn <lnykryn@redhat.com> - 2:1.34-7
 - Warn “file changed as we read it” less often
 
 * Thu Feb 09 2023 Matej Mužila <mmuzila@redhat.com> - 2:1.34-6
