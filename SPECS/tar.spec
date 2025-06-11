@@ -6,7 +6,7 @@ Summary: A GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.30
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: GPLv3+
 Group: Applications/Archiving
 URL: http://www.gnu.org/software/tar/
@@ -31,6 +31,13 @@ Patch17: tar-1.30-Fix-the-no-overwrite-dir-option
 # Remove the capabilities test, due to fails (BZ#2066320 and BZ#1926332)
 Patch18: tar-1.30-remove-capabs-test.patch
 Patch19: tar-1.30-CVE-2022-48303.patch
+Patch20: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
+# inspired by upstream commit 64b43fdf70d82c39eb2ca900cd4f8e49b86c2020
+# "tests: fix race in dirrem01 and dirrem02"
+# Patch20 for some reason exposes a race in the filerem01 test,
+# use this to enforce the order where genfile wins the race
+# and removes the test file before tar archives it.
+Patch21: tar-1.30-filerem01.at-swap-actions.patch
 
 # run "make check" by default
 %bcond_without check
@@ -137,6 +144,10 @@ fi
 %{_infodir}/tar.info*
 
 %changelog
+* Tue Jun  3 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.30-10
+- Warn “file changed as we read it” less often
+- Add downstream patch to fix related failure in filerem01 test
+
 * Thu Feb 09 2023 Matej Mužila <mmuzila@redhat.com> - 1.30-9
 - Fix CVE-2022-48303
 - Resolves: CVE-2022-48303

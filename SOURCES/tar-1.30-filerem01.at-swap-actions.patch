@@ -1,0 +1,15 @@
+diff --git a/tests/filerem01.at b/tests/filerem01.at
+index bf020538..6a9893a6 100644
+--- a/tests/filerem01.at
++++ b/tests/filerem01.at
+@@ -43,8 +43,8 @@ genfile --file dir/file1
+ genfile --file dir/sub/file2
+ 
+ genfile --run --checkpoint=3 --unlink dir/file1 -- \
+-       tar --blocking-factor=1 --checkpoint=1 --checkpoint-action='sleep=1' \
+-       --checkpoint-action='echo' -c -f archive.tar \
++       tar --blocking-factor=1 --checkpoint=1 --checkpoint-action='echo' \
++       --checkpoint-action='sleep=1' -c -f archive.tar \
+        --listed-incremental db -v dir >/dev/null
+ ],
+ [1],
