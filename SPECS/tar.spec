@@ -6,7 +6,7 @@ Summary: A GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.30
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv3+
 Group: Applications/Archiving
 URL: http://www.gnu.org/software/tar/
@@ -38,6 +38,8 @@ Patch20: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
 # use this to enforce the order where genfile wins the race
 # and removes the test file before tar archives it.
 Patch21: tar-1.30-filerem01.at-swap-actions.patch
+# Source: https://cgit.git.savannah.gnu.org/cgit/tar.git/diff/?id=4e742fc8674064a9fa00d4483d06aca48d5b0463
+Patch22: tar-1.30-no-overwrite-dir-no-overwrite-even-temporarily.patch
 
 # run "make check" by default
 %bcond_without check
@@ -144,6 +146,11 @@ fi
 %{_infodir}/tar.info*
 
 %changelog
+* Fri Aug  1 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.30-11
+- Backport fix for regression in the --no-overwrite-dir option fix (1.30-7)
+  Upstream commit 4e742fc8674064a9fa00d4483d06aca48d5b0463, discussed
+  in https://www.mail-archive.com/bug-tar@gnu.org/msg06445.html
+
 * Tue Jun  3 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.30-10
 - Warn “file changed as we read it” less often
 - Add downstream patch to fix related failure in filerem01 test
