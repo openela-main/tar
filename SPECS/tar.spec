@@ -5,7 +5,7 @@ Summary: GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.34
-Release: 7%{?dist}
+Release: 9%{?dist}
 License: GPLv3+
 URL: https://www.gnu.org/software/tar/
 
@@ -23,6 +23,32 @@ Patch11: tar-1.30-padding-zeros.patch
 Patch12: tar-1.30-disk-read-error.patch
 Patch13: tar-1.34-CVE-2022-48303.patch
 Patch14: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
+#tar commits from upstream
+# 56fb4a96ca43c247261b8c04dd65592f990f98ac
+# 7c241126f14975c7f5df4268b434f276fc7f8842
+# bdd773d028cd21f9b76b8cc306c57e0db3607e82
+# cdb586803b762d9021db2ae8bf5dad3f9b8e4f77
+# 915a8077af12a3eaf7800dbb1a4259783d9933ca
+# 8fca2d35e88d10f0ddcb36720e88f40ac57f67f0
+# e1445cfdf0dfd2f792532afc1eb18b01523dbfb4
+# 75b03fdff48916bd0654677ed21379bdb0db016d
+# 8767b1c84a910cce562059abad5bbf14e72434a0
+#Gnulib commits from upstream to bring openat2 support
+# 0b97ffdf32bdab909d02449043447237273df75e
+# c706216fec5a509bf9b1214892de01aa9303ade0
+# c6502cda83752ff2235d2064c213e7a9e2214201
+# 5746cd1cdbb2caf0e321ea79041885fc7ef22423
+# 3d23c8df2582a6b0e44e048d431ecb00a14667ec
+# a209366ed34eca8ede481ec1b1c4e22f614c448d
+# 8e85114bf1d51d9ea54a89f058c3a2cfa0c19c5e
+# 6bff6c3741209e933e721e81e1b5c5abdbd4389a
+# 24d2acd301cea7cde1928c84f926a54707e945d5
+# 4e1fa851f4f43f749d18b83500757f5bcf1f47bd
+# 20074698382b7e4f049f52bbdeaf6a39508a8601
+# d1aeb7388926e045bdec0f7934c5522c4745f02c
+# 45b6e6898d1f931bfca41d961289bd6ac33238e5
+# e54b645fc6b8422562327443bda575c65d931fbd
+Patch23: tar-1.34-CVE-2025-45582.patch
 
 BuildRequires: make
 BuildRequires:  gcc
@@ -117,6 +143,15 @@ make check || (
 
 
 %changelog
+* Fri Dec 19 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.34-9
+- Fix the last patch to solve a regression with -x and --xattrs: RHEL-136277
+  also, fix another tiny mistake in the patch (w/o visible consequences)
+
+* Fri Dec 12 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.34-8
+- Backport upstream changes to jailify extraction directory
+  Includes related gnulib changes to add openat2
+  Fixes CVE-2025-45582
+
 * Thu Aug 15 2024 Lukas Nykryn <lnykryn@redhat.com> - 2:1.34-7
 - Warn “file changed as we read it” less often
 
