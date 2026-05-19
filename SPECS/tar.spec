@@ -5,7 +5,7 @@ Summary: GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.34
-Release: 9%{?dist}
+Release: 11%{?dist}
 License: GPLv3+
 URL: https://www.gnu.org/software/tar/
 
@@ -23,6 +23,8 @@ Patch11: tar-1.30-padding-zeros.patch
 Patch12: tar-1.30-disk-read-error.patch
 Patch13: tar-1.34-CVE-2022-48303.patch
 Patch14: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
+# Source: https://cgit.git.savannah.gnu.org/cgit/tar.git/diff/?id=4e742fc8674064a9fa00d4483d06aca48d5b0463
+Patch22: tar-1.34-no-overwrite-dir-no-overwrite-even-temporarily.patch
 #tar commits from upstream
 # 56fb4a96ca43c247261b8c04dd65592f990f98ac
 # 7c241126f14975c7f5df4268b434f276fc7f8842
@@ -49,6 +51,7 @@ Patch14: tar-1.34-Warn-file-changed-as-we-read-it-less-often.patch
 # 45b6e6898d1f931bfca41d961289bd6ac33238e5
 # e54b645fc6b8422562327443bda575c65d931fbd
 Patch23: tar-1.34-CVE-2025-45582.patch
+Patch24: tar-1.34-tar-one-top-level-DIR-must-be-relative.patch
 
 BuildRequires: make
 BuildRequires:  gcc
@@ -143,6 +146,15 @@ make check || (
 
 
 %changelog
+* Mon Feb 23 2026 Pavel Cahyna <pcahyna@redhat.com> - 2:1.34-11
+- Add upstream patch to improve error message for --one-top-level
+  with absolute path (unsupported as a result of CVE-2025-45582 fix)
+
+* Mon Jan 12 2026 Pavel Cahyna <pcahyna@redhat.com> - 2:1.34-10
+- Backport fix for regression in the --no-overwrite-dir option
+  Upstream commit 4e742fc8674064a9fa00d4483d06aca48d5b0463, discussed
+  in https://www.mail-archive.com/bug-tar@gnu.org/msg06445.html
+
 * Fri Dec 19 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.34-9
 - Fix the last patch to solve a regression with -x and --xattrs: RHEL-136277
   also, fix another tiny mistake in the patch (w/o visible consequences)
