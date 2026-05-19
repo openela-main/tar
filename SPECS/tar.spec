@@ -10,7 +10,7 @@ Summary: GNU file archiving program
 Name: tar
 Epoch: 2
 Version: 1.35
-Release: 9%{?dist}
+Release: 11%{?dist}
 License: GPL-3.0-or-later
 URL: https://www.gnu.org/software/tar/
 
@@ -24,9 +24,15 @@ Patch3:  tar-1.29-wildcards.patch
 Patch4:  tar-1.28-atime-rofs.patch
 Patch9:  tar-1.28-document-exclude-mistakes.patch
 Patch10: tar-1.33-fix-capabilities-test.patch
-Patch11: tar-1.35-add-forgotten-tests-from-upstream.patch
-Patch12: tar-1.35-revert-fix-savannah-bug-633567.patch
+Patch11: tar-1.35-padding-zeros.patch
+Patch12: tar-1.30-disk-read-error.patch
 Patch13: tar-1.35-fix-spurious-diagnostic-during-extraction-of-.-with-keep-newer-files.patch
+Patch14: tar-1.35-add-forgotten-tests-from-upstream.patch
+Patch15: tar-1.35-revert-fix-savannah-bug-633567.patch
+# Source: https://cgit.git.savannah.gnu.org/cgit/tar.git/diff/?id=5114218025b4562392dd260e2533d3fa2bc0220e
+Patch16: tar-1.35-Fix-Savane-bug-64581.patch
+# Source: https://cgit.git.savannah.gnu.org/cgit/tar.git/diff/?id=4e742fc8674064a9fa00d4483d06aca48d5b0463
+Patch22: tar-1.35-no-overwrite-dir-no-overwrite-even-temporarily.patch
 #tar commits from upstream
 # 56fb4a96ca43c247261b8c04dd65592f990f98ac
 # 7c241126f14975c7f5df4268b434f276fc7f8842
@@ -51,7 +57,8 @@ Patch13: tar-1.35-fix-spurious-diagnostic-during-extraction-of-.-with-keep-newer
 # 20074698382b7e4f049f52bbdeaf6a39508a8601
 # d1aeb7388926e045bdec0f7934c5522c4745f02c
 # 45b6e6898d1f931bfca41d961289bd6ac33238e5
-Patch14: tar-1.35-CVE-2025-45582.patch
+Patch23: tar-1.35-CVE-2025-45582.patch
+Patch24: tar-1.35-tar-one-top-level-DIR-must-be-relative.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -150,6 +157,19 @@ make check || (
 
 
 %changelog
+* Mon Feb 23 2026 Pavel Cahyna <pcahyna@redhat.com> - 2:1.35-11
+- Add upstream patch to improve error message for --one-top-level
+  with absolute path (unsupported as a result of CVE-2025-45582 fix)
+
+* Mon Jan 12 2026 Pavel Cahyna <pcahyna@redhat.com> - 2:1.35-10
+- added "padding with zeros" info message (#2089298)
+- do not report disk error as file shrank (#2089316)
+- upstream fix for savannah bug 64581, commit 51142180
+  (crash with TAR_OPTIONS)
+- Backport fix for regression in the --no-overwrite-dir option
+  Upstream commit 4e742fc8674064a9fa00d4483d06aca48d5b0463, discussed
+  in https://www.mail-archive.com/bug-tar@gnu.org/msg06445.html
+
 * Fri Dec 19 2025 Pavel Cahyna <pcahyna@redhat.com> - 2:1.35-9
 - Fix a tiny mistake in the last patch affecting hardling extraction
   (w/o visible consequences)
